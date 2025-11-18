@@ -1,0 +1,12 @@
+services:
+  ncore_client:
+    build:
+      context: backend
+      dockerfile: backend/Dockerfile
+    container_name: ncore_client
+    ports:
+      - "9000:9000"
+    env_file:
+      - env/env.prod.properties
+    volumes:
+      - ${HOST_TORRENTS}:/torrents
