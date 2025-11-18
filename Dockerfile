@@ -7,6 +7,5 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar ncore_client.jar
-COPY env/env.prod.properties .
 EXPOSE 9000
 ENTRYPOINT ["java", "-jar", "ncore_client.jar"]

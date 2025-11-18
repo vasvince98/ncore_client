@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  ncore_client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ncore_client
+    ports:
+      - "9000:9000"
+    env_file:
+      - env/env.prod.properties
+    volumes:
+      - /Users/vasvince/Documents/Torrentek:/torrents
