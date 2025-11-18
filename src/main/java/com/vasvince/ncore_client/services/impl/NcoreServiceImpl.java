@@ -32,10 +32,10 @@ public class NcoreServiceImpl implements NcoreService {
 
         if (torrents != null) {
             for (File torrent : torrents) {
-                BasicFileAttributes attributes = Files.readAttributes(torrent.toPath(), BasicFileAttributes.class);
+                long size = calculateFolderSize(torrent);
                 FileInfoResponse fileInfo = new FileInfoResponse();
                 fileInfo.setTorrentName(torrent.getName());
-                fileInfo.setFolderSize(humanReadableSize(attributes.size()));
+                fileInfo.setFolderSize(humanReadableSize(size));
                 responseList.add(fileInfo);
             }
         } else {
@@ -43,6 +43,22 @@ public class NcoreServiceImpl implements NcoreService {
         }
 
         return responseList;
+    }
+
+    private long calculateFolderSize(File file) throws IOException {
+        if (file.isFile()) {
+            return Files.readAttributes(file.toPath(), BasicFileAttributes.class).size();
+        } else if (file.isDirectory()) {
+            long size = 0;
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    size += calculateFolderSize(f);
+                }
+            }
+            return size;
+        }
+        return 0;
     }
 
     public String humanReadableSize(long bytes) {
