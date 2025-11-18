@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   ncore_client:
     build:
@@ -11,4 +9,4 @@ services:
     env_file:
       - env/env.prod.properties
     volumes:
-      - /Users/vasvince/Documents/Torrentek:/torrents
+      - ${HOST_TORRENTS}:/torrents
