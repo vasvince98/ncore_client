@@ -1,0 +1,20 @@
+services:
+  ncore_client:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: ncore_client
+    ports:
+      - "9000:9000"
+    env_file:
+      - env/env.prod.properties
+    volumes:
+      - ${HOST_TORRENTS}:/torrents
+
+  frontend:
+    build:
+      context: ncore_client_app
+      dockerfile: Dockerfile
+    container_name: flutter_web
+    ports:
+      - "9001:80"
