@@ -1,7 +1,7 @@
 package com.vasvince.ncore_client.controllers;
 
 import com.vasvince.ncore_client.entities.FileInfoResponse;
-import com.vasvince.ncore_client.services.NcoreService;
+import com.vasvince.ncore_client.services.FileService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +20,10 @@ public class NcoreRESTController {
 
     private static final Logger logger = LoggerFactory.getLogger(NcoreRESTController.class);
 
-    private final NcoreService ncoreService;
+    private final FileService ncoreService;
 
     @Autowired
-    public NcoreRESTController(final NcoreService ncoreService) {
+    public NcoreRESTController(final FileService ncoreService) {
         Objects.requireNonNull(ncoreService, "ncore service is null");
         this.ncoreService = ncoreService;
     }
@@ -34,6 +34,8 @@ public class NcoreRESTController {
         logger.info("getAllFiles endpoint invoked from: {}", requestIp);
         return ncoreService.getAllFiles();
     }
+
+
 
     private String getClientIp(HttpServletRequest request) {
         //Proxy, load-balancer bypass
